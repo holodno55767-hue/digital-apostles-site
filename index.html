@@ -2,348 +2,694 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цифровые Апостолы: Служение в медиа-церкви</title>
-    <!--
-      Этот простой лендинг адаптирован под GitHub Pages. Он использует чистый HTML и CSS,
-      поэтому может быть размещён в репозитории без бэкенда. Для отправки формы
-      рекомендуется подключить сторонний сервис обработки форм (например Formspree).
-      Чтобы сайт выглядел лучше, замените "ВАШ_ЛОГОТИП" на путь к файлу логотипа
-      (png/svg), который вы загрузите в репозиторий, и пропишите endpoint формы.
-    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Медиа-Служение Церкви "Ковчег"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* --- CSS VARIABLES & GLOBAL STYLES --- */
         :root {
-            /* Цвета в стиле "Cyber Grace" */
-            --bg: #050A14;
-            --bg-alt: #131A2E;
-            --accent: #00c8ff;
-            --text-light: #f5f5f5;
-            --text-muted: #b3c7db;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-hover: rgba(255, 255, 255, 0.1);
-            --transition-fast: 0.25s;
-            --border-radius: 8px;
+            /* Цветовая палитра на основе лого и здания */
+            --bg-deep: #02060c;
+            --bg-dark: #0a1120;
+            --neon-blue: #00f3ff;
+            --neon-purple: #bd00ff;
+            /* Оранжевый акцент из логотипа */
+            --neon-orange: #ff9100;
+            --text-primary: #ffffff;
+            --text-secondary: #b3c2d8;
+            
+            --font-hud: 'Orbitron', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            --glow-blue: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3), 0 0 40px rgba(0, 243, 255, 0.1);
+            --glow-orange: 0 0 10px rgba(255, 145, 0, 0.6), 0 0 25px rgba(255, 145, 0, 0.4);
         }
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-light);
-            line-height: 1.5;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        header {
-            padding: 20px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--bg);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: var(--accent);
+        h1, h2, h3, .hud-text {
+            font-family: var(--font-hud);
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .logo img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
+        /* --- PARALLAX BACKGROUND & EFFECTS --- */
+        .virtual-reality-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
         }
 
+        /* Слой 1: Схемы (база) */
+        .bg-layer-circuit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(2, 6, 12, 0.9), rgba(10, 17, 32, 0.95)),
+                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyB2aWV3Qm94PScwIDAgMTAwIDEwMCc+PGcgc3Ryb2tlPScjMDBmM2ZlJyBzdHJva2Utd2lkdGg9JzAuNScgb3BhY2l0eT0nMC4zJz48cGF0aCBkPSdNMCAwaDEwMHYxMDBIMHonIGZpbGw9J25vbmUnLz48cGF0aCBkPSdNMTAgMTBoODB2ODBIMTB6JyBmaWxsPSdub25lJy8+PHBhdGggZD0nTTUwIDB2MTAwTTAgNTBoMTAwJy8+PC9nPjwvc3ZnPg=='); /* Простой паттерн сетки */
+            background-size: cover;
+        }
+
+        /* Слой 2: Здание церкви (Параллакс) */
+        .bg-layer-building {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background-image: url('image_1.png'); /* ЗДАНИЕ */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            mix-blend-mode: lighten;
+            filter: hue-rotate(10deg) contrast(1.2);
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+        
+        /* Слой 3: Цифровые частицы */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- HEADER & LOGO --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background: rgba(2, 6, 12, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .logo-container img {
+            height: 60px; /* Регулируйте высоту логотипа */
+            filter: drop-shadow(0 0 8px rgba(255, 145, 0, 0.7));
+        }
+
+        /* --- SECTIONS GLOBAL --- */
         section {
-            padding: 60px 5%;
-        }
-
-        .hero {
-            min-height: 80vh;
+            padding: 100px 10%;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            /* Используем фоновое изображение для параллакса */
-            background-image: url('hero-bg.png');
-            background-size: cover;
-            background-position: center;
-            /* Фиксируем фон для параллакса */
-            background-attachment: fixed;
             position: relative;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-            text-transform: uppercase;
-        }
-
-        .hero p {
-            max-width: 620px;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: var(--bg);
-            padding: 14px 30px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: background-color var(--transition-fast), color var(--transition-fast);
-            box-shadow: 0 0 15px var(--accent);
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--text-light);
-            color: var(--bg);
+        /* Разделители секций в стиле киберпанк */
+        section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-orange), transparent);
         }
 
         h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
+            font-size: 3rem;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--text-primary), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            align-items: flex-start;
+            text-align: left;
+            padding-top: 150px;
+        }
+
+        h1.hero-title {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-orange {
+            color: var(--neon-orange);
+             text-shadow: var(--glow-orange);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 50px;
+            border-left: 3px solid var(--neon-orange);
+            padding-left: 20px;
+        }
+
+        .cybr-btn {
+            --primary: var(--neon-orange);
+            --shadow-primary: var(--glow-orange);
+            font-family: var(--font-hud);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #fff;
+            background: transparent;
+            border: 1px solid var(--primary);
+            position: relative;
+            cursor: pointer;
             text-transform: uppercase;
-            text-align: center;
+            transition: 0.3s;
+            overflow: hidden;
         }
 
-        .content-center {
-            max-width: 960px;
-            margin: 0 auto;
+        .cybr-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 145, 0, 0.4), transparent);
+            transition: 0.5s;
         }
 
+        .cybr-btn:hover::before {
+            left: 100%;
+        }
+
+        .cybr-btn:hover {
+             box-shadow: var(--shadow-primary);
+             background: rgba(255, 145, 0, 0.1);
+        }
+
+
+        /* --- PASTOR & VISION SECTION --- */
+        .vision-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .pastor-holo-frame {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            /* Рамка с эффектом голограммы */
+            border: 2px solid var(--neon-blue);
+            box-shadow: var(--glow-blue);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .pastor-holo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Эффект цифрового шума и синего свечения на фото */
+            filter: contrast(1.1) sepia(0.2) hue-rotate(180deg) saturate(1.5);
+            opacity: 0.9;
+        }
+        
+        /* Сканирующая линия поверх фото */
+        .pastor-holo-frame::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(180deg, transparent, var(--neon-blue), transparent);
+            opacity: 0.3;
+            animation: scanline 4s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: -50%; }
+            100% { top: 150%; }
+        }
+
+        .vision-text blockquote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            border-left: 4px solid var(--neon-blue);
+            padding: 20px 30px;
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+
+        /* --- HUD ROLES SECTION (Самое сложное) --- */
         .roles-grid {
             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            margin-top: 30px;
+            margin-top: 50px;
         }
 
-        .role {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            transition: transform var(--transition-fast), background-color var(--transition-fast);
-            border-left: 4px solid var(--accent);
-        }
-
-        .role:hover {
-            transform: translateY(-4px);
-            background-color: var(--card-hover);
-        }
-
-        /* Изображения внутри карточек ролей */
-        .role-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-            margin-bottom: 10px;
-        }
-
-        .role h3 {
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-            font-size: 1.3rem;
-        }
-
-        .role .tag {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .mission ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .mission li {
-            margin-bottom: 0.5rem;
+        /* Базовый стиль карточки */
+        .hud-card {
+            background: rgba(10, 17, 32, 0.8);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 30px;
             position: relative;
-            padding-left: 24px;
-        }
-        .mission li::before {
-            content: '✔';
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent);
-        }
-
-        .form-section {
-            background-color: var(--bg-alt);
-            padding-top: 70px;
-            padding-bottom: 70px;
-            text-align: center;
-        }
-        .form-section form {
-            max-width: 480px;
-            margin: 0 auto;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Пружинистый эффект */
+            cursor: pointer;
+            min-height: 250px; /* Начальная высота */
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-        .form-section input,
-        .form-section select {
-            padding: 12px;
-            border: 1px solid var(--accent);
-            border-radius: var(--border-radius);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-        .form-section button {
-            cursor: pointer;
-            padding: 14px;
-            border-radius: var(--border-radius);
-            background-color: var(--accent);
-            color: var(--bg);
-            font-weight: 700;
-            border: none;
-            transition: background-color var(--transition-fast), color var(--transition-fast);
-        }
-        .form-section button:hover {
-            background-color: var(--text-light);
-            color: var(--bg);
         }
 
-        /* Ссылки в секции контактов */
-        .contact-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+        /* Эффекты при наведении (активация HUD) */
+        .hud-card:hover {
+            border-color: var(--neon-blue);
+            box-shadow: var(--glow-blue);
+            transform: scale(1.03) translateY(-5px);
+            background: rgba(0, 243, 255, 0.08);
+        }
+        
+        /* Уголки как в прицеле */
+        .hud-card::before, .hud-card::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            border: 2px solid var(--neon-blue);
+            transition: 0.3s;
+            opacity: 0;
+        }
+        .hud-card::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .hud-card::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        .hud-card:hover::before, .hud-card:hover::after {
+            opacity: 1;
+            width: 40px; height: 40px;
+        }
+
+        .hud-icon {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .hud-card:hover .hud-icon {
+            text-shadow: var(--glow-blue);
+            transform: scale(1.1);
+        }
+
+        .hud-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        /* Скрытый контент */
+        .hud-details {
+            max-height: 0; /* Скрыто по умолчанию */
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            border-top: 1px dashed rgba(0, 243, 255, 0.3);
             margin-top: 20px;
+            padding-top: 0;
+            position: relative;
         }
-        .contact-links .btn-primary {
-            margin: 0;
+        
+        /* Анимация появления контента при наведении */
+        .hud-card:hover .hud-details {
+            max-height: 300px; /* Достаточная высота для текста */
+            opacity: 1;
+            padding-top: 20px;
         }
 
-        footer {
-            background-color: var(--bg);
-            padding: 20px;
-            text-align: center;
+        /* Декоративный элемент "загрузки" данных */
+        .data-stream {
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 2px;
+            height: 0;
+            background: var(--neon-blue);
+            transition: height 0.5s 0.2s; /* Задержка перед появлением */
+        }
+        .hud-card:hover .data-stream {
+            height: 100%;
+        }
+
+
+        /* --- FORM SECTION --- */
+        .form-container {
+            background: rgba(2, 6, 12, 0.9);
+            border: 2px solid var(--neon-orange);
+            padding: 50px;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: var(--glow-orange);
+        }
+
+        .cyber-input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .cyber-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 145, 0, 0.5);
+            padding: 15px 5px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .cyber-input:focus {
+            outline: none;
+            border-bottom-color: var(--neon-orange);
+            box-shadow: 0 5px 10px -5px rgba(255, 145, 0, 0.3);
+        }
+
+        .cyber-label {
+            position: absolute;
+            left: 5px;
+            top: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transition: 0.3s;
+            font-family: var(--font-hud);
+            font-size: 0.9rem;
+        }
+
+        /* Анимация лейбла при фокусе или заполнении */
+        .cyber-input:focus ~ .cyber-label,
+        .cyber-input:valid ~ .cyber-label {
+            top: -10px;
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--neon-orange);
+        }
+        
+        /* Стили для селекта (выбор направления) */
+        select.cyber-input {
+             color: var(--neon-orange);
+        }
+        select.cyber-input option {
+            background: var(--bg-dark);
+            color: #fff;
+        }
+
+        #form-feedback {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 1.6em;
+        }
+        .success-message { color: var(--neon-blue); }
+        .error-message { color: red; }
+
+
+        /* АДАПТИВНОСТЬ (Мобильные устройства) */
+        @media (max-width: 768px) {
+            h1.hero-title { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            section { padding: 80px 5%; }
+            .vision-container { flex-direction: column; }
+            .pastor-holo-frame { width: 100%; height: 400px; }
+            /* На мобилках HUD раскрыт всегда, т.к. нет ховера */
+            .hud-card .hud-details {
+                max-height: none;
+                opacity: 1;
+                padding-top: 20px;
+                border-top-style: solid;
+            }
+            .hud-card { min-height: auto; }
         }
     </style>
 </head>
 <body>
-    <!-- Шапка с логотипом -->
+
+    <div class="virtual-reality-bg">
+        <div class="bg-layer-circuit"></div>
+        <div class="bg-layer-building" id="parallax-building"></div>
+        <div id="particles-js"></div>
+    </div>
+
     <header>
-        <div class="logo">
-            <!-- Здесь подключается логотип. Файл logo.png будет лежать в корне репозитория -->
-            <img src="logo.png" alt="Логотип">
-            <span>Цифровые Апостолы</span>
+        <div class="logo-container">
+            <img src="image_0.png" alt="Ковчег Логотип">
         </div>
     </header>
 
-    <!-- Герой-блок -->
     <section class="hero">
-        <h1>Стань голосом церкви</h1>
-        <p>В эпоху цифрового шума мы выбираем звучать громко. Используй свои таланты, чтобы делать добро и нести свет Христов онлайн.</p>
-        <a href="#signup" class="btn-primary">Вступить в команду</a>
+        <h1 class="hero-title">СЛУЖЕНИЕ В<br> <span class="highlight-orange">ЦИФРОВОМ МИРЕ</span></h1>
+        <div class="hero-subtitle">
+            <p>Мы не просто используем технологии. Мы освящаем цифровое пространство, исполняя Великое Поручение там, где сегодня находятся люди. <br>Глава — Христос. Поле миссии — Интернет.</p>
+        </div>
+        <a href="#join-us" class="cybr-btn">Вступить в команду <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></a>
     </section>
 
-    <!-- Манифест / Наше видение -->
-    <section>
-        <h2>Наша кафедра — в каждом смартфоне</h2>
-        <div class="content-center">
-            <p>Мы не наблюдаем за будущим со стороны. Мы создаём его. Сегодня 90 % внимания людей находится в экранах. Там, где внимание — там должно быть и Евангелие. Мы ищем не просто волонтёров. Мы ищем <strong>Цифровых Апостолов</strong>, готовых использовать нейросети, камеры и креатив, чтобы менять жизни онлайн.</p>
+    <section id="vision">
+        <h2>ВИДЕНИЕ ЦЕРКВИ</h2>
+        <div class="vision-container">
+            <div class="pastor-holo-frame">
+                <img src="image_2.png" alt="Пастор Михаил Нигородов">
+            </div>
+            <div class="vision-text">
+                <h3>Пастор Михаил Нигородов</h3>
+                <p style="color: var(--neon-orange); margin-bottom: 20px;">Старший пастор церкви "Ковчег"</p>
+                <blockquote>
+                    "Сегодня кафедра проповедника находится не только в здании церкви, но и в каждом смартфоне. Мы призваны нести Свет Евангелия, используя самые современные инструменты, чтобы достичь сердец, которые еще не знают Христа. Нам нужны горящие сердца и умелые руки для этой жатвы."
+                </blockquote>
+            </div>
         </div>
     </section>
 
-    <!-- Направления/Роли -->
-    <section>
-        <h2>Твоя роль в экосистеме</h2>
+    <section id="roles">
+        <h2>ВЫБЕРИ СВОЙ МОДУЛЬ СЛУЖЕНИЯ</h2>
+        <p style="max-width: 700px; margin-bottom: 40px; color: var(--text-secondary);">Наведи на карточку, чтобы получить детализацию данных.</p>
+        
         <div class="roles-grid">
-            <div class="role">
-                <img src="role-video.jpg" alt="Видео" class="role-img">
-                <h3>CREATOR (Reels & Shorts)</h3>
-                <p>Нарезка проповедей на вирусные ролики. Мы дадим ИИ, который сам ищет лучшие моменты. Твоя задача — стиль, динамика, субтитры.</p>
-                <div class="tag">🔥 Easy Start</div>
+            <div class="hud-card">
+                <i class="fas fa-play-circle hud-icon"></i>
+                <h3 class="hud-title">CREATOR <br>(Reels/Shorts)</h3>
+                <p>Создание вирусного короткого контента из проповедей.</p>
+                <div class="hud-details">
+                    <div class="data-stream"></div> <ul style="list-style: none; padding-left: 20px;">
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Работа с ИИ для нарезки видео</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Динамичный монтаж и субтитры</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Опыт не требуется, всему обучим</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: var(--neon-orange);">[STATUS: ACTIVE RECRUITMENT]</p>
+                </div>
             </div>
-            <div class="role">
-                <img src="role-smm.jpg" alt="SMM" class="role-img">
-                <h3>SMM Visionary</h3>
-                <p>Управление сообществами (VK, TG, YouTube). Генерация текстов и картинок через нейросети. Ты станешь голосом бренда церкви.</p>
-                <div class="tag">🤖 AI Powered</div>
+
+            <div class="hud-card">
+                <i class="fas fa-hashtag hud-icon"></i>
+                <h3 class="hud-title">SMM <br>VISIONARY</h3>
+                <p>Голос церкви в социальных сетях (VK, Telegram, YouTube).</p>
+                <div class="hud-details">
+                    <div class="data-stream"></div>
+                    <ul style="list-style: none; padding-left: 20px;">
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Генерация контента через нейросети</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Ведение сообществ и комьюнити</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Креативный подход к текстам</li>
+                    </ul>
+                     <p style="margin-top: 15px; color: var(--neon-orange);">[STATUS: HIGH PRIORITY]</p>
+                </div>
             </div>
-            <div class="role">
-                <img src="role-stream.jpg" alt="Прямой эфир" class="role-img">
-                <h3>Stream Operator</h3>
-                <p>Прямой эфир. Две камеры. Ты решаешь, что увидит мир. Драйв, ответственность и полное погружение в процесс служения.</p>
-                <div class="tag">🎥 Pro Skill</div>
+
+            <div class="hud-card">
+                <i class="fas fa-video hud-icon"></i>
+                <h3 class="hud-title">LIVE STREAM <br>OPERATOR</h3>
+                <p>Управление прямыми трансляциями богослужений.</p>
+                <div class="hud-details">
+                    <div class="data-stream"></div>
+                    <ul style="list-style: none; padding-left: 20px;">
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Работа с камерами в прямом эфире</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Режиссура трансляции</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Полное погружение в процесс</li>
+                    </ul>
+                     <p style="margin-top: 15px; color: var(--neon-orange);">[STATUS: TRAINING AVAILABLE]</p>
+                </div>
             </div>
-            <div class="role">
-                <img src="role-web.jpg" alt="Web" class="role-img">
-                <h3>Web Builder</h3>
-                <p>Лендинги, сайты, интерактивные презентации. No‑code инструменты. Создавай удобную цифровую среду для людей.</p>
-                <div class="tag">💻 Career Boost</div>
+             <div class="hud-card">
+                <i class="fas fa-code hud-icon"></i>
+                <h3 class="hud-title">WEB <br>ARCHITECT</h3>
+                <p>Создание сайтов и интерактивных презентаций.</p>
+                <div class="hud-details">
+                    <div class="data-stream"></div>
+                    <ul style="list-style: none; padding-left: 20px;">
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Разработка на No-code платформах</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Дизайн лендингов для проектов</li>
+                        <li><i class="fas fa-check" style="color:var(--neon-blue)"></i> Современный востребованный навык</li>
+                    </ul>
+                     <p style="margin-top: 15px; color: var(--neon-orange);">[STATUS: OPEN]</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Что мы предлагаем -->
-    <section class="mission">
-        <h2>Не умеешь? — научим</h2>
-        <div class="content-center">
-            <ul>
-                <li><strong>Полный доступ к софту</strong> — мы дадим все программы.</li>
-                <li><strong>Обучение с нуля</strong> — от «как включить» до «как сделать шедевр».</li>
-                <li><strong>AI‑ассистенты</strong> — минимум рутины, максимум творчества.</li>
-                <li><strong>Наставничество</strong> — рядом опытная команда. Ты не будешь один.</li>
-            </ul>
+    <section id="join-us">
+        <h2>ИНИЦИАЛИЗАЦИЯ ПОДКЛЮЧЕНИЯ</h2>
+        <p style="margin-bottom: 30px;">Заполни форму, и данные будут зашифрованы и отправлены напрямую координатору служения.</p>
+        
+        <div class="form-container">
+            <form id="cyber-form">
+                <div class="cyber-input-group">
+                    <input type="text" id="name" class="cyber-input" required>
+                    <label for="name" class="cyber-label">Твое Имя / Позывной</label>
+                </div>
+
+                <div class="cyber-input-group">
+                    <input type="text" id="contact" class="cyber-input" required>
+                    <label for="contact" class="cyber-label">Telegram или WhatsApp для связи</label>
+                </div>
+
+                <div class="cyber-input-group" style="margin-top: 40px;">
+                     <label for="role-select" class="cyber-label" style="top: -25px; color: var(--neon-orange); font-size: 0.9rem;">Желаемый модуль служения:</label>
+                    <select id="role-select" class="cyber-input" required>
+                        <option value="" disabled selected>Выбрать из списка...</option>
+                        <option value="Creator (Видео)">Creator (Reels/Shorts)</option>
+                        <option value="SMM Visionary">SMM (Соцсети)</option>
+                        <option value="Stream Operator">Оператор Эфира</option>
+                        <option value="Web Architect">Веб-разработчик</option>
+                        <option value="Хочу все знать">Готов к любому направлению</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="cybr-btn" style="width: 100%; margin-top: 20px;">ОТПРАВИТЬ ДАННЫЕ <i class="fas fa-satellite-dish"></i></button>
+            </form>
+            <div id="form-feedback"></div>
         </div>
     </section>
 
-    <!-- Блок с будущим -->
-    <section style="background-color: var(--bg-alt);">
-        <h2>Больше, чем просто волонтёрство</h2>
-        <div class="content-center">
-            <p>Мы строим профессиональный Media Production. Начав со служения в церкви, ты получишь навыки для работы в больших проектах. Наша цель — брать внешние заказы, монетизировать творчество команды и вместе инвестировать в дело Божье. <strong>Твоё портфолио начинается здесь.</strong></p>
-        </div>
-    </section>
 
-    <!-- Форма / CTA -->
-    <section class="form-section" id="signup">
-        <h2>Готов к апгрейду?</h2>
-        <p>Напиши нам прямо сейчас — мы свяжемся с тобой и расскажем детали.</p>
-        <!-- Заменили форму на прямые ссылки, чтобы 404 не возникал. Эти ссылки открывают диалог в VK или Telegram. -->
-        <div class="contact-links">
-            <a href="https://vk.me/g.vibes767" class="btn-primary" target="_blank">Написать в VK</a>
-            <a href="https://t.me/GVibesMedia" class="btn-primary" target="_blank">Написать в Telegram</a>
-        </div>
-    </section>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script>
+        // --- НАСТРОЙКА TELEGRAM БОТА (КРИТИЧЕСКИ ВАЖНО!) ---
+        // 1. Создай бота в Telegram через @BotFather и получи токен.
+        // 2. Узнай свой Chat ID (например, через бота @userinfobot).
+        // 3. Вставь эти данные ниже в кавычки.
+        const TG_BOT_TOKEN = 'ТОКЕН_ТВОЕГО_БОТА'; // Например: '6543210987:AAHfxxxxxxxxx...'
+        const TG_CHAT_ID = 'ТВОЙ_CHAT_ID';   // Например: '123456789'
 
-    <!-- Подвал -->
-    <footer>
-        <p>Ковчег. Digital Ministry 2025.</p>
-        <p>
-            <a href="https://t.me/GVibesMedia" style="color: var(--accent); text-decoration: none; margin-right: 12px;">Telegram</a>
-            |
-            <a href="https://vk.com/g.vibes767" style="color: var(--accent); text-decoration: none; margin: 0 12px;">VK</a>
-            |
-            <a href="tel:+79236727827" style="color: var(--accent); text-decoration: none;">Позвонить</a>
-        </p>
-    </footer>
+
+        // --- 1. СКРИПТ ПАРАЛЛАКСА (Эффект движения здания) ---
+        document.addEventListener('mousemove', (e) => {
+            const building = document.getElementById('parallax-building');
+            // Вычисляем смещение мыши от центра экрана
+            let x = (window.innerWidth / 2 - e.pageX) / 30; // Делим на 30, чтобы движение было плавным и небольшим
+            let y = (window.innerHeight / 2 - e.pageY) / 30;
+            
+            // Применяем смещение к фону со зданием
+            building.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+        });
+
+
+        // --- 2. СКРИПТ ОТПРАВКИ ФОРМЫ В TELEGRAM ---
+        const form = document.getElementById('cyber-form');
+        const feedback = document.getElementById('form-feedback');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Останавливаем стандартную отправку
+
+            // Проверка, введены ли токены
+            if (TG_BOT_TOKEN === 'ТОКЕН_ТВОЕГО_БОТА' || TG_CHAT_ID === 'ТВОЙ_CHAT_ID') {
+                feedback.innerHTML = '<span class="error-message">ОШИБКА КОНФИГУРАЦИИ: Владелец сайта не настроил Telegram Bot Token!</span>';
+                return;
+            }
+            
+            feedback.innerHTML = '<span style="color:var(--neon-blue)">Шифрование и отправка данных... <i class="fas fa-spinner fa-spin"></i></span>';
+            
+            // Собираем данные из полей
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const role = document.getElementById('role-select').value;
+
+            // Формируем красивое сообщение для Телеграм (используем Markdown)
+            const message = `🔥 *НОВАЯ ЗАЯВКА В МЕДИА-КОМАНДУ* 🔥\n\n👤 *Имя:* ${name}\n📱 *Контакт:* \`${contact}\`\n🎯 *Направление:* ${role}\n\n_Отправлено с сайта Ковчег Медиа_`;
+
+            // URL для отправки запроса к API Telegram
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: TG_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown' // Чтобы работало форматирование жирным и кодом
+                    })
+                });
+
+                if (response.ok) {
+                    feedback.innerHTML = '<span class="success-message">УСПЕШНО: Данные переданы координатору. Ожидайте связи. <i class="fas fa-check-circle"></i></span>';
+                    form.reset(); // Очистить форму
+                } else {
+                    throw new Error('Ошибка сервера Telegram');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                feedback.innerHTML = '<span class="error-message">СБОЙ СЕТИ: Не удалось отправить данные. Попробуйте позже.</span>';
+            }
+        });
+
+
+        // --- 3. НАСТРОЙКА ЧАСТИЦ (Particles.js) ---
+        // Создаем эффект цифровой пыли
+        particlesJS('particles-js', {
+          "particles": {
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#00f3ff" }, // Цвет частиц (неон голубой)
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5, "random": true },
+            "size": { "value": 3, "random": true },
+            "line_linked": {
+              "enable": true,
+              "distance": 150,
+              "color": "#00f3ff",
+              "opacity": 0.2,
+              "width": 1
+            },
+            "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+              "onhover": { "enable": true, "mode": "repulse" }, // Частицы разлетаются от мышки
+              "onclick": { "enable": true, "mode": "push" },
+              "resize": true
+            }
+          },
+          "retina_detect": true
+        });
+    </script>
 </body>
 </html>
