@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровые Апостолы: Служение в медиа-церкви</title>
+    <!--
+      Этот простой лендинг адаптирован под GitHub Pages. Он использует чистый HTML и CSS,
+      поэтому может быть размещён в репозитории без бэкенда. Для отправки формы
+      рекомендуется подключить сторонний сервис обработки форм (например Formspree).
+      Чтобы сайт выглядел лучше, замените "ВАШ_ЛОГОТИП" на путь к файлу логотипа
+      (png/svg), который вы загрузите в репозиторий, и пропишите endpoint формы.
+    -->
+    <style>
+        :root {
+            /* Цвета в стиле "Cyber Grace" */
+            --bg: #050A14;
+            --bg-alt: #131A2E;
+            --accent: #00c8ff;
+            --text-light: #f5f5f5;
+            --text-muted: #b3c7db;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.1);
+            --transition-fast: 0.25s;
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        header {
+            padding: 20px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        section {
+            padding: 60px 5%;
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url(''); /* можно добавить фон-видео или изображение */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg);
+            padding: 14px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+            box-shadow: 0 0 15px var(--accent);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text-light);
+            color: var(--bg);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .content-center {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .roles-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            margin-top: 30px;
+        }
+
+        .role {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            transition: transform var(--transition-fast), background-color var(--transition-fast);
+            border-left: 4px solid var(--accent);
+        }
+
+        .role:hover {
+            transform: translateY(-4px);
+            background-color: var(--card-hover);
+        }
+
+        .role h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .role .tag {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .mission ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .mission li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 24px;
+        }
+        .mission li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+        }
+
+        .form-section {
+            background-color: var(--bg-alt);
+            padding-top: 70px;
+            padding-bottom: 70px;
+            text-align: center;
+        }
+        .form-section form {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-section input,
+        .form-section select {
+            padding: 12px;
+            border: 1px solid var(--accent);
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        .form-section button {
+            cursor: pointer;
+            padding: 14px;
+            border-radius: var(--border-radius);
+            background-color: var(--accent);
+            color: var(--bg);
+            font-weight: 700;
+            border: none;
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+        }
+        .form-section button:hover {
+            background-color: var(--text-light);
+            color: var(--bg);
+        }
+
+        footer {
+            background-color: var(--bg);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка с логотипом -->
+    <header>
+        <div class="logo">
+            <!-- Здесь подключается логотип. Файл logo.png будет лежать в корне репозитория -->
+            <img src="logo.png" alt="Логотип">
+            <span>Цифровые Апостолы</span>
+        </div>
+    </header>
+
+    <!-- Герой-блок -->
+    <section class="hero">
+        <h1>Стань голосом церкви</h1>
+        <p>В эпоху цифрового шума мы выбираем звучать громко. Используй свои таланты, чтобы делать добро и нести свет Христов онлайн.</p>
+        <a href="#signup" class="btn-primary">Вступить в команду</a>
+    </section>
+
+    <!-- Манифест / Наше видение -->
+    <section>
+        <h2>Наша кафедра — в каждом смартфоне</h2>
+        <div class="content-center">
+            <p>Мы не наблюдаем за будущим со стороны. Мы создаём его. Сегодня 90 % внимания людей находится в экранах. Там, где внимание — там должно быть и Евангелие. Мы ищем не просто волонтёров. Мы ищем <strong>Цифровых Апостолов</strong>, готовых использовать нейросети, камеры и креатив, чтобы менять жизни онлайн.</p>
+        </div>
+    </section>
+
+    <!-- Направления/Роли -->
+    <section>
+        <h2>Твоя роль в экосистеме</h2>
+        <div class="roles-grid">
+            <div class="role">
+                <h3>CREATOR (Reels & Shorts)</h3>
+                <p>Нарезка проповедей на вирусные ролики. Мы дадим ИИ, который сам ищет лучшие моменты. Твоя задача — стиль, динамика, субтитры.</p>
+                <div class="tag">🔥 Easy Start</div>
+            </div>
+            <div class="role">
+                <h3>SMM Visionary</h3>
+                <p>Управление сообществами (VK, TG, YouTube). Генерация текстов и картинок через нейросети. Ты станешь голосом бренда церкви.</p>
+                <div class="tag">🤖 AI Powered</div>
+            </div>
+            <div class="role">
+                <h3>Stream Operator</h3>
+                <p>Прямой эфир. Две камеры. Ты решаешь, что увидит мир. Драйв, ответственность и полное погружение в процесс служения.</p>
+                <div class="tag">🎥 Pro Skill</div>
+            </div>
+            <div class="role">
+                <h3>Web Builder</h3>
+                <p>Лендинги, сайты, интерактивные презентации. No‑code инструменты. Создавай удобную цифровую среду для людей.</p>
+                <div class="tag">💻 Career Boost</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Что мы предлагаем -->
+    <section class="mission">
+        <h2>Не умеешь? — научим</h2>
+        <div class="content-center">
+            <ul>
+                <li><strong>Полный доступ к софту</strong> — мы дадим все программы.</li>
+                <li><strong>Обучение с нуля</strong> — от «как включить» до «как сделать шедевр».</li>
+                <li><strong>AI‑ассистенты</strong> — минимум рутины, максимум творчества.</li>
+                <li><strong>Наставничество</strong> — рядом опытная команда. Ты не будешь один.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Блок с будущим -->
+    <section style="background-color: var(--bg-alt);">
+        <h2>Больше, чем просто волонтёрство</h2>
+        <div class="content-center">
+            <p>Мы строим профессиональный Media Production. Начав со служения в церкви, ты получишь навыки для работы в больших проектах. Наша цель — брать внешние заказы, монетизировать творчество команды и вместе инвестировать в дело Божье. <strong>Твоё портфолио начинается здесь.</strong></p>
+        </div>
+    </section>
+
+    <!-- Форма / CTA -->
+    <section class="form-section" id="signup">
+        <h2>Готов к апгрейду?</h2>
+        <p>Оставь заявку — мы свяжемся с тобой и расскажем детали.</p>
+        <!-- Чтобы форма работала, замените action на URL сервиса приёма форм
+             (например, Formspree: https://formspree.io/f/yourid). Поле method="POST" оставить. -->
+        <!-- Здесь можно подключить сервис обработки форм (например, Formspree). Пока форма не отправляет данные -->
+        <form action="#" method="POST">
+            <input type="text" name="name" placeholder="Как тебя зовут?" required>
+            <input type="text" name="contact" placeholder="Твой Telegram/WhatsApp" required>
+            <select name="role" required>
+                <option value="" disabled selected>Что интересно?</option>
+                <option value="video">Видео (Reels & Shorts)</option>
+                <option value="smm">SMM (Соцсети)</option>
+                <option value="stream">Прямой эфир</option>
+                <option value="web">Веб‑креатор</option>
+                <option value="all">Хочу всё</option>
+            </select>
+            <button type="submit">Отправить заявку 🚀</button>
+        </form>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <p>Ковчег. Digital Ministry 2025.</p>
+        <p>
+            <a href="https://t.me/GVibesMedia" style="color: var(--accent); text-decoration: none; margin-right: 12px;">Telegram</a>
+            |
+            <a href="https://vk.com/g.vibes767" style="color: var(--accent); text-decoration: none; margin: 0 12px;">VK</a>
+            |
+            <a href="tel:+79236727827" style="color: var(--accent); text-decoration: none;">Позвонить</a>
+        </p>
+    </footer>
+</body>
+</html>
