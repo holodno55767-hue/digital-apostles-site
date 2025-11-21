@@ -75,9 +75,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background-image: url(''); /* можно добавить фон-видео или изображение */
+            /* Используем фоновое изображение для параллакса */
+            background-image: url('hero-bg.png');
             background-size: cover;
             background-position: center;
+            /* Фиксируем фон для параллакса */
+            background-attachment: fixed;
             position: relative;
         }
 
@@ -143,6 +146,15 @@
         .role:hover {
             transform: translateY(-4px);
             background-color: var(--card-hover);
+        }
+
+        /* Изображения внутри карточек ролей */
+        .role-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
         }
 
         .role h3 {
@@ -213,6 +225,18 @@
             color: var(--bg);
         }
 
+        /* Ссылки в секции контактов */
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .contact-links .btn-primary {
+            margin: 0;
+        }
+
         footer {
             background-color: var(--bg);
             padding: 20px;
@@ -252,21 +276,25 @@
         <h2>Твоя роль в экосистеме</h2>
         <div class="roles-grid">
             <div class="role">
+                <img src="role-video.jpg" alt="Видео" class="role-img">
                 <h3>CREATOR (Reels & Shorts)</h3>
                 <p>Нарезка проповедей на вирусные ролики. Мы дадим ИИ, который сам ищет лучшие моменты. Твоя задача — стиль, динамика, субтитры.</p>
                 <div class="tag">🔥 Easy Start</div>
             </div>
             <div class="role">
+                <img src="role-smm.jpg" alt="SMM" class="role-img">
                 <h3>SMM Visionary</h3>
                 <p>Управление сообществами (VK, TG, YouTube). Генерация текстов и картинок через нейросети. Ты станешь голосом бренда церкви.</p>
                 <div class="tag">🤖 AI Powered</div>
             </div>
             <div class="role">
+                <img src="role-stream.jpg" alt="Прямой эфир" class="role-img">
                 <h3>Stream Operator</h3>
                 <p>Прямой эфир. Две камеры. Ты решаешь, что увидит мир. Драйв, ответственность и полное погружение в процесс служения.</p>
                 <div class="tag">🎥 Pro Skill</div>
             </div>
             <div class="role">
+                <img src="role-web.jpg" alt="Web" class="role-img">
                 <h3>Web Builder</h3>
                 <p>Лендинги, сайты, интерактивные презентации. No‑code инструменты. Создавай удобную цифровую среду для людей.</p>
                 <div class="tag">💻 Career Boost</div>
@@ -298,23 +326,12 @@
     <!-- Форма / CTA -->
     <section class="form-section" id="signup">
         <h2>Готов к апгрейду?</h2>
-        <p>Оставь заявку — мы свяжемся с тобой и расскажем детали.</p>
-        <!-- Чтобы форма работала, замените action на URL сервиса приёма форм
-             (например, Formspree: https://formspree.io/f/yourid). Поле method="POST" оставить. -->
-        <!-- Здесь можно подключить сервис обработки форм (например, Formspree). Пока форма не отправляет данные -->
-        <form action="#" method="POST">
-            <input type="text" name="name" placeholder="Как тебя зовут?" required>
-            <input type="text" name="contact" placeholder="Твой Telegram/WhatsApp" required>
-            <select name="role" required>
-                <option value="" disabled selected>Что интересно?</option>
-                <option value="video">Видео (Reels & Shorts)</option>
-                <option value="smm">SMM (Соцсети)</option>
-                <option value="stream">Прямой эфир</option>
-                <option value="web">Веб‑креатор</option>
-                <option value="all">Хочу всё</option>
-            </select>
-            <button type="submit">Отправить заявку 🚀</button>
-        </form>
+        <p>Напиши нам прямо сейчас — мы свяжемся с тобой и расскажем детали.</p>
+        <!-- Заменили форму на прямые ссылки, чтобы 404 не возникал. Эти ссылки открывают диалог в VK или Telegram. -->
+        <div class="contact-links">
+            <a href="https://vk.me/g.vibes767" class="btn-primary" target="_blank">Написать в VK</a>
+            <a href="https://t.me/GVibesMedia" class="btn-primary" target="_blank">Написать в Telegram</a>
+        </div>
     </section>
 
     <!-- Подвал -->
