@@ -6,16 +6,788 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <!-- ФОН С ЧАСТИЦАМИ -->
-  <div id="particles-js" class="particles-bg"></div>
 
-  <!-- ХЕДЕР -->
+  <style>
+    :root {
+      --bg-deep: #020617;
+      --bg-card: rgba(15,23,42,0.95);
+      --bg-glass: rgba(15,23,42,0.8);
+      --accent: #22d3ee;
+      --accent-2: #f97316;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-soft: rgba(148,163,184,0.4);
+      --shadow-glow: 0 0 25px rgba(34,211,238,0.5);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    h1, h2, h3 {
+      font-family: "Orbitron", system-ui, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Фон-частицы */
+    #particles-js {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+    }
+
+    /* HEADER */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: linear-gradient(to bottom, rgba(15,23,42,0.96), rgba(15,23,42,0.8));
+      border-bottom: 1px solid rgba(148,163,184,0.4);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-wrap img {
+      height: 36px;
+      filter: drop-shadow(0 0 12px rgba(249,115,22,0.6));
+    }
+
+    .logo-caption {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
+
+    .main-nav a {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .main-nav a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .header-contact {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.5);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(34,211,238,0.2), transparent 55%);
+    }
+
+    .header-contact i { font-size: 0.9rem; }
+
+    /* SECTIONS */
+    .section {
+      padding: 64px 18px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section:not(:first-of-type) {
+      scroll-margin-top: 80px;
+    }
+
+    .section-title-wrap {
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .section-title-wrap h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #e5e7eb, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title-wrap p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    .hud-label {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .accent {
+      color: var(--accent-2);
+      text-shadow: 0 0 18px rgba(249,115,22,0.7);
+    }
+
+    /* HERO */
+    .hero-section {
+      padding-top: 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-section h1 {
+      font-size: 2.1rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 600px;
+      margin-bottom: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 11px 20px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn i { font-size: 0.9rem; }
+
+    .btn.primary {
+      background: radial-gradient(circle at top left, #22d3ee, #0ea5e9);
+      color: #020617;
+      box-shadow: 0 0 25px rgba(56,189,248,0.6);
+    }
+
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .btn.ghost {
+      border-color: rgba(148,163,184,0.8);
+      color: var(--text-main);
+      background: rgba(15,23,42,0.7);
+    }
+
+    .btn.ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .btn.wide { width: 100%; justify-content: center; }
+
+    /* HERO BUILDING */
+    .hero-visual {
+      position: relative;
+    }
+
+    .building-wrapper {
+      position: relative;
+      perspective: 1100px;
+      transform-style: preserve-3d;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+      background: radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 55%);
+    }
+
+    .building-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform-origin: center;
+    }
+
+    .building-layer.back {
+      background-image: url("image_1.png");
+      filter: saturate(1.1) contrast(1.1);
+      opacity: 0.9;
+    }
+
+    .building-layer.glow {
+      background-image: url("image_1.png");
+      mix-blend-mode: screen;
+      filter: blur(6px) brightness(1.8) hue-rotate(180deg);
+      opacity: 0.9;
+    }
+
+    .building-layer.front {
+      background-image: url("image_1.png");
+      box-shadow: inset 0 0 80px rgba(15,23,42,0.9);
+    }
+
+    .hero-tag {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      backdrop-filter: blur(10px);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
+
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      70% { transform: scale(1.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    /* ВИДЕНИЕ */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .tilt {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.15s ease-out;
+    }
+
+    .pastor-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      background: radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 55%);
+    }
+
+    .pastor-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.08) saturate(1.25) hue-rotate(180deg);
+    }
+
+    .pastor-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(56,189,248,0.6), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .pastor-overlay {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      padding: 14px 16px;
+      background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);
+    }
+
+    .pastor-overlay h3 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .pastor-overlay p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .glass-panel {
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.08), transparent 60%), var(--bg-glass);
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+    }
+
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+      font-size: 0.96rem;
+    }
+
+    .vision-text p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    /* РОЛИ */
+    .section-roles {
+      padding-bottom: 72px;
+    }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .role-card {
+      position: relative;
+      padding: 18px 18px 60px 18px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease-out;
+    }
+
+    .role-card:hover {
+      border-color: rgba(56,189,248,0.8);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
+    }
+
+    .role-card::before,
+    .role-card::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(56,189,248,0.6);
+      opacity: 0;
+      transition: all 0.23s ease;
+    }
+
+    .role-card::before {
+      top: 8px;
+      left: 8px;
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .role-card::after {
+      bottom: 8px;
+      right: 8px;
+      border-left: 0;
+      border-top: 0;
+    }
+
+    .role-card:hover::before,
+    .role-card:hover::after {
+      opacity: 1;
+      width: 26px;
+      height: 26px;
+    }
+
+    .role-icon {
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .role-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .role-card > p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .role-card ul {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .role-card ul li {
+      margin-bottom: 4px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .role-card ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .role-details {
+      border-top: 1px dashed rgba(148,163,184,0.5);
+      padding-top: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .role-details-block + .role-details-block {
+      margin-top: 8px;
+    }
+
+    .role-details-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .role-status {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      padding: 4px 14px 0 18px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      opacity: 0.9;
+    }
+
+    .role-status.hot { color: var(--accent-2); }
+    .role-status.priority { color: var(--accent); }
+
+    /* ФОРМА */
+    .section-form {
+      padding-bottom: 80px;
+    }
+
+    .form-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    .join-form {
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      background: radial-gradient(circle at top left, rgba(249,115,22,0.14), transparent 60%), var(--bg-card);
+      border: 1px solid rgba(248,171,94,0.7);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+    }
+
+    .field {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.8);
+      padding: 12px 12px 10px 12px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      appearance: none;
+    }
+
+    .field input::placeholder { color: transparent; }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 1px rgba(249,115,22,0.6);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .field label {
+      position: absolute;
+      left: 12px;
+      top: 11px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: transform 0.17s ease, font-size 0.17s ease, top 0.17s ease, color 0.17s ease;
+    }
+
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label {
+      top: 4px;
+      font-size: 0.7rem;
+      color: var(--accent-2);
+    }
+
+    .select-label {
+      position: absolute;
+      left: 12px;
+      top: -9px;
+      font-size: 0.72rem;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .form-status {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      min-height: 1.4em;
+    }
+
+    .form-status.ok { color: var(--accent); }
+    .form-status.err { color: #f97373; }
+
+    .form-side {
+      font-size: 0.86rem;
+    }
+
+    .steps {
+      list-style: none;
+      margin: 8px 0 10px;
+      padding: 0;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+
+    .steps li span {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-top: 2px;
+      min-width: 26px;
+    }
+
+    .mini-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .quick-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0 6px;
+    }
+
+    .quick-contacts a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.8rem;
+      color: var(--text-main);
+      background: rgba(15,23,42,0.8);
+      text-decoration: none;
+    }
+
+    .quick-contacts a i { font-size: 0.9rem; }
+
+    .quick-contacts a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 1px solid rgba(148,163,184,0.4);
+      padding: 14px 18px 20px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.95), #020617);
+    }
+
+    .footer-main {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-logo img { height: 32px; }
+
+    .footer-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-meta {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      background: rgba(15,23,42,0.9);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* SCROLL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .vision-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .form-shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .footer-main {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .main-nav {
+        display: none; /* упростим на мобиле, чтобы не было кучи ссылок */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        padding-inline: 14px;
+      }
+      .hero-section {
+        padding-top: 58px;
+      }
+      .hero-section h1 {
+        font-size: 1.7rem;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="particles-js"></div>
+
   <header class="site-header">
     <div class="logo-wrap">
-      <img src="img/image_0.png" alt="Ковчег — логотип" />
+      <img src="image_0.png" alt="Ковчег — логотип" />
       <span class="logo-caption">Медиа-служение</span>
     </div>
     <nav class="main-nav">
@@ -30,8 +802,7 @@
     </a>
   </header>
 
-  <!-- HERO С 3D-ЗДАНИЕМ -->
-  <section id="hero" class="section hero-section">
+  <section id="hero" class="section hero-section reveal">
     <div class="hero-grid">
       <div class="hero-text">
         <p class="hud-label">инициализация медиа-миссии</p>
@@ -40,19 +811,16 @@
           В <span class="accent">ЦИФРОВОМ</span> МИРЕ
         </h1>
         <p class="hero-subtitle">
-          Здание церкви — наш физический дом. Цифровое пространство — наш
-          второй зал, где проповедь слышат те, кто ещё ни разу не был в
-          собрании. Мы собираем команду <span class="accent">цифровых
-          апостолов</span>, чтобы нести Евангелие туда, где люди проводят
-          большую часть своей жизни — в сети.
+          Здание церкви — наш физический дом. Цифровое пространство — наш второй зал,
+          где проповедь слышат те, кто ещё ни разу не был в собрании. Мы собираем
+          команду <span class="accent">цифровых апостолов</span>, чтобы нести
+          Евангелие туда, где люди проводят большую часть своей жизни — в сети.
         </p>
         <div class="hero-actions">
           <a href="#join" class="btn primary">
-            ВСТУПИТЬ В КОМАНДУ <i class="fa-solid fa-arrow-right"></i>
+            Вступить в команду <i class="fa-solid fa-arrow-right"></i>
           </a>
-          <a href="#roles" class="btn ghost">
-            Посмотреть направления
-          </a>
+          <a href="#roles" class="btn ghost">Посмотреть направления</a>
         </div>
       </div>
 
@@ -70,8 +838,7 @@
     </div>
   </section>
 
-  <!-- ВИДЕНИЕ + ПАСТОР -->
-  <section id="vision" class="section section-vision">
+  <section id="vision" class="section section-vision reveal">
     <div class="section-title-wrap">
       <h2>ВИДЕНИЕ МЕДИА-СЛУЖЕНИЯ</h2>
       <p>Мы не просто закрываем технические задачи — мы строим цифровую кафедру.</p>
@@ -80,7 +847,7 @@
     <div class="vision-grid">
       <div class="pastor-card tilt">
         <div class="pastor-photo">
-          <img src="img/image_2.png" alt="Пастор Михаил Нигородов" />
+          <img src="image_2.png" alt="Пастор Михаил Нигородов" />
         </div>
         <div class="pastor-overlay">
           <h3>Пастор Михаил Нигородов</h3>
@@ -91,71 +858,58 @@
       <div class="vision-text glass-panel">
         <p class="hud-label">слова пастора</p>
         <blockquote>
-          «Сегодня кафедра проповедника стоит не только в зале церкви, но и в
-          миллионах экранов. Мы призваны звучать там, где звучит этот мир —
-          чтобы голос Христа не терялся в шуме ленты».
+          «Сегодня кафедра проповедника стоит не только в зале церкви, но и в миллионах экранов.
+          Мы призваны звучать там, где звучит этот мир — чтобы голос Христа не терялся в шуме ленты».
         </blockquote>
         <p>
-          Медиа-служение «Ковчег» — это пространство, где духовное и
-          технологичное встречаются. Мы обучаем, настраиваем, помогаем
-          освоить инструменты ИИ, монтаж, работу в прямом эфире и создание
-          сайтов.
+          Медиа-служение «Ковчег» — это пространство, где духовное и технологичное встречаются.
+          Мы обучаем, настраиваем, помогаем освоить инструменты ИИ, монтаж, работу в прямом эфире
+          и создание сайтов.
         </p>
         <p>
-          Даже если ты никогда не монтировал видео — здесь ты сможешь
-          получить реальные навыки, сформировать портфолио и послужить
-          Богу тем, что востребовано в 21 веке.
+          Даже если ты никогда не монтировал видео — здесь ты сможешь получить реальные навыки,
+          сформировать портфолио и послужить Богу тем, что востребовано в 21 веке.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- РОЛИ / НАПРАВЛЕНИЯ -->
-  <section id="roles" class="section section-roles">
+  <section id="roles" class="section section-roles reveal">
     <div class="section-title-wrap">
       <h2>ВЫБЕРИ СВОЙ МОДУЛЬ СЛУЖЕНИЯ</h2>
       <p>Наведись на нужный блок — увидишь детальную «HUD-карту» задач.</p>
     </div>
 
     <div class="roles-grid">
-      <!-- CREATOR -->
       <article class="role-card tilt">
-        <div class="role-icon">
-          <i class="fa-solid fa-play"></i>
-        </div>
+        <div class="role-icon"><i class="fa-solid fa-play"></i></div>
         <h3>КРЕАТОР КОРОТКИХ ВИДЕО</h3>
-        <p>
-          Делаешь из проповеди живые, цепляющие клипы под VK, Telegram и YouTube.
-        </p>
+        <p>Делаешь из проповеди живые, цепляющие клипы под VK, Telegram и YouTube.</p>
         <ul>
-          <li>Работа с вертикальным форматом (Reels / Shorts / клипы).</li>
-          <li>Добавление субтитров и оформления под бренд церкви.</li>
-          <li>Помощь нейросетей в выборе лучших моментов.</li>
+          <li>Вертикальный формат (Reels / Shorts / клипы).</li>
+          <li>Субтитры и оформление под стиль церкви.</li>
+          <li>ИИ помогает найти лучшие моменты.</li>
         </ul>
-
         <div class="role-details">
           <div class="role-details-block">
             <span class="role-details-title">Что будешь делать</span>
-            <p>Резать длинные проповеди на короткие фрагменты, подбирать «крючок» начала, ставить титры, музыку, выгружать готовые ролики.</p>
+            <p>Резать длинные проповеди на короткие фрагменты, подбирать «крючок» начала,
+              ставить титры, музыку, выгружать ролики.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">Что даём мы</span>
-            <p>Программы для авто-нарезки, шаблоны субтитров, обучающие созвоны по монтажу и чек-лист по оформлению роликов.</p>
+            <p>Программы для авто-нарезки, шаблоны субтитров, обучение по монтажу и чек-листы.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">От тебя нужно</span>
-            <p>Аккуратность, чувство вкуса, желание учиться и 2–4 часа в неделю на служение.</p>
+            <p>Аккуратность, чувство вкуса и 2–4 часа в неделю на служение.</p>
           </div>
         </div>
-
         <span class="role-status hot">Статус: набор открыт</span>
       </article>
 
-      <!-- SMM -->
       <article class="role-card tilt">
-        <div class="role-icon">
-          <i class="fa-solid fa-hashtag"></i>
-        </div>
+        <div class="role-icon"><i class="fa-solid fa-hashtag"></i></div>
         <h3>SMM-КУРАТОР СОЦСЕТЕЙ</h3>
         <p>Отвечаешь за голос церкви в соцсетях и общение с людьми онлайн.</p>
         <ul>
@@ -163,91 +917,80 @@
           <li>Посты, описания к роликам, ответы на комментарии.</li>
           <li>Использование ИИ для текстов и картинок.</li>
         </ul>
-
         <div class="role-details">
           <div class="role-details-block">
             <span class="role-details-title">Что будешь делать</span>
-            <p>Планировать публикации, помогать людям в личных сообщениях, писать простые, живые тексты и следить, чтобы странички не «умирали».</p>
+            <p>Планировать публикации, помогать людям в личке, писать живые тексты и
+              следить, чтобы странички не «умирали».</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">Что даём мы</span>
-            <p>Готовую стратегию, доступ к нейросетям, шаблоны постов и поддержку по содержанию от служителей.</p>
+            <p>Готовую стратегию, доступ к нейросетям, шаблоны постов и поддержку служителей.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">От тебя нужно</span>
-            <p>Грамотный русский, любовь к людям, умение отвечать спокойно и по-христиански даже на сложные комментарии.</p>
+            <p>Грамотный русский, любовь к людям и спокойная реакция даже на сложные комментарии.</p>
           </div>
         </div>
-
         <span class="role-status priority">Статус: высокий приоритет</span>
       </article>
 
-      <!-- STREAM -->
       <article class="role-card tilt">
-        <div class="role-icon">
-          <i class="fa-solid fa-tower-broadcast"></i>
-        </div>
+        <div class="role-icon"><i class="fa-solid fa-tower-broadcast"></i></div>
         <h3>ОПЕРАТОР ПРЯМЫХ ЭФИРОВ</h3>
         <p>Управляешь трансляциями богослужений и создаёшь атмосферу онлайн.</p>
         <ul>
-          <li>Переключение камер и ракурсов в реальном времени.</li>
-          <li>Контроль звука, заставок, титров и чата.</li>
-          <li>Работа бок о бок с командой прославления и пастором.</li>
+          <li>Переключение камер и ракурсов.</li>
+          <li>Контроль звука, заставок и титров.</li>
+          <li>Работа бок о бок с командой и пастором.</li>
         </ul>
-
         <div class="role-details">
           <div class="role-details-block">
             <span class="role-details-title">Что будешь делать</span>
-            <p>Следить за картинкой и звуком, вовремя менять планы камер, включать нужные слайды и титры во время проповеди и поклонения.</p>
+            <p>Следить за картинкой и звуком, вовремя менять планы камер,
+              включать нужные слайды и титры.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">Что даём мы</span>
-            <p>Обучение на реальных служениях, готовые схемы эфиров, помощь в настройке пульта, камер и OBS/программ вещания.</p>
+            <p>Обучение на реальных служениях, схемы эфиров, помощь в настройке пульта и камер.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">От тебя нужно</span>
-            <p>Внимательность, ответственность и готовность приходить заранее, чтобы всё настроить до начала служения.</p>
+            <p>Внимательность, ответственность и готовность приходить заранее.</p>
           </div>
         </div>
-
         <span class="role-status">Статус: обучение предусмотрено</span>
       </article>
 
-      <!-- WEB -->
       <article class="role-card tilt">
-        <div class="role-icon">
-          <i class="fa-solid fa-code"></i>
-        </div>
+        <div class="role-icon"><i class="fa-solid fa-code"></i></div>
         <h3>ВЕБ-АРХИТЕКТОР</h3>
         <p>Создаёшь лендинги и микросайты для проектов и служений церкви.</p>
         <ul>
-          <li>Работа в конструкторах (no-code) и простых CMS.</li>
-          <li>Сбор заявок через формы, подключение аналитики.</li>
-          <li>Оформление страниц под единый стиль «Ковчег Медиа».</li>
+          <li>Конструкторы (no-code) и простые CMS.</li>
+          <li>Сбор заявок через формы, аналитика.</li>
+          <li>Единый стиль «Ковчег Медиа».</li>
         </ul>
-
         <div class="role-details">
           <div class="role-details-block">
             <span class="role-details-title">Что будешь делать</span>
-            <p>Собирать простые сайты под конференции, мероприятия, курсы, оформлять страницы регистрации и благодарности.</p>
+            <p>Собирать сайты под конференции, мероприятия и курсы, оформлять страницы регистрации.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">Что даём мы</span>
-            <p>Доступ к платным инструментам (по возможности), шаблоны блоков, наставничество и помощь по структуре страниц.</p>
+            <p>Доступ к инструментам, шаблоны блоков, наставничество по структуре страниц.</p>
           </div>
           <div class="role-details-block">
             <span class="role-details-title">От тебя нужно</span>
-            <p>Логическое мышление, аккуратность, желание разбираться в сервисах и доводить проекты до конца.</p>
+            <p>Логика, аккуратность и желание разбираться в сервисах.</p>
           </div>
         </div>
-
         <span class="role-status">Статус: открыто</span>
       </article>
     </div>
   </section>
 
-  <!-- ФОРМА ЗАЯВКИ -->
-  <section id="join" class="section section-form">
+  <section id="join" class="section section-form reveal">
     <div class="section-title-wrap">
       <h2>ПОДКЛЮЧЕНИЕ К КОМАНДЕ</h2>
       <p>Заполни анкету — координатор свяжется с тобой и расскажет детали.</p>
@@ -259,12 +1002,10 @@
           <input type="text" id="name" required placeholder=" " />
           <label for="name">Имя / как к тебе обращаться</label>
         </div>
-
         <div class="field">
           <input type="text" id="contact" required placeholder=" " />
           <label for="contact">Telegram, VK или WhatsApp</label>
         </div>
-
         <div class="field">
           <select id="role" required>
             <option value="" disabled selected>Выбери направление</option>
@@ -288,11 +1029,9 @@
         <ul class="steps">
           <li><span>01</span> Заполняешь форму с контактами и направлением.</li>
           <li><span>02</span> Координатор получает заявку в Telegram.</li>
-          <li><span>03</span> Созвон / встреча, знакомство и старт обучения.</li>
+          <li><span>03</span> Созвон / встреча и старт обучения.</li>
         </ul>
-        <p class="mini-note">
-          Хочешь написать сразу — выбери удобный вариант:
-        </p>
+        <p class="mini-note">Хочешь написать сразу — выбери удобный вариант:</p>
         <div class="quick-contacts">
           <a href="https://vk.com/g.vibes767" target="_blank">
             <i class="fa-brands fa-vk"></i> Написать в VK
@@ -311,11 +1050,10 @@
     </div>
   </section>
 
-  <!-- ФУТЕР -->
   <footer class="site-footer">
     <div class="footer-main">
       <div class="footer-logo">
-        <img src="img/image_0.png" alt="Ковчег" />
+        <img src="image_0.png" alt="Ковчег" />
       </div>
       <div class="footer-text">
         <p>Церковь христиан веры евангельской «Ковчег» · Медиа-служение.</p>
@@ -337,6 +1075,151 @@
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script src="js/main.js"></script>
+  <script>
+    // ===== TELEGRAM НАСТРОЙКА =====
+    // ВСТАВЬ СВОЙ ТОКЕН И CHAT_ID
+    const TG_BOT_TOKEN = "ТОКЕН_ТВОЕГО_БОТА";
+    const TG_CHAT_ID = "ТВОЙ_CHAT_ID";
+
+    const form = document.getElementById("join-form");
+    const statusEl = document.getElementById("form-status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const role = document.getElementById("role").value;
+
+      if (!name || !contact || !role) return;
+
+      if (TG_BOT_TOKEN === "ТОКЕН_ТВОЕГО_БОТА" || TG_CHAT_ID === "ТВОЙ_CHAT_ID") {
+        statusEl.className = "form-status err";
+        statusEl.textContent = "Ошибка конфигурации: нужно настроить Telegram-бота.";
+        return;
+      }
+
+      statusEl.className = "form-status";
+      statusEl.textContent = "Отправка данных...";
+
+      const msg =
+        `🔥 НОВАЯ ЗАЯВКА В МЕДИА-КОМАНДУ\n\n` +
+        `👤 Имя: ${name}\n` +
+        `📱 Контакт: ${contact}\n` +
+        `🎯 Направление: ${role}\n\n` +
+        `_Сайт: Ковчег Медиа_`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TG_CHAT_ID,
+            text: msg,
+            parse_mode: "Markdown"
+          })
+        });
+
+        if (res.ok) {
+          statusEl.className = "form-status ok";
+          statusEl.textContent = "Готово! Координатор получил заявку и свяжется с тобой.";
+          form.reset();
+        } else {
+          throw new Error("Ошибка Telegram API");
+        }
+      } catch (err) {
+        console.error(err);
+        statusEl.className = "form-status err";
+        statusEl.textContent = "Не удалось отправить. Попробуй ещё раз чуть позже.";
+      }
+    });
+
+    // ===== PARALLAX/ТИЛТ ЗДАНИЯ =====
+    const building = document.getElementById("building3d");
+    if (building) {
+      building.addEventListener("mousemove", (e) => {
+        const rect = building.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotateX = y * -10;
+        const rotateY = x * 14;
+        building.style.transform =
+          `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+      });
+      building.addEventListener("mouseleave", () => {
+        building.style.transform = "rotateX(0deg) rotateY(0deg)";
+      });
+    }
+
+    // Лёгкий tilt для карточек
+    document.querySelectorAll(".tilt").forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotateX = y * -8;
+        const rotateY = x * 10;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "rotateX(0deg) rotateY(0deg)";
+      });
+    });
+
+    // ===== REVEAL ON SCROLL =====
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    // ===== PARTICLES BACKGROUND =====
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 75, density: { enable: true, value_area: 800 } },
+        color: { value: "#22d3ee" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4, random: true },
+        size: { value: 2.5, random: true },
+        line_linked: {
+          enable: true,
+          distance: 140,
+          color: "#0ea5e9",
+          opacity: 0.25,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1.6,
+          direction: "none",
+          random: false,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 90, duration: 0.4 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
 </body>
 </html>
