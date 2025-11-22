@@ -2,862 +2,341 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Цифровые Апостолы — медиа-служение церкви «Ковчег»</title>
-
-  <style>
-    :root {
-      --bg: #050814;
-      --bg-soft: #0c1224;
-      --accent: #ffd36a;
-      --accent-soft: rgba(255, 211, 106, 0.16);
-      --accent-strong: #ffb347;
-      --text: #f5f7ff;
-      --text-muted: #9ba4c6;
-      --card-bg: rgba(12, 18, 36, 0.94);
-      --card-border: rgba(255, 255, 255, 0.06);
-      --radius: 14px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --transition-fast: 0.25s ease;
-      --transition-slow: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      color: var(--text);
-      background: radial-gradient(circle at top, #101733 0, #02040a 55%);
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* ====== NAVBAR ====== */
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 50;
-      backdrop-filter: blur(20px);
-      background: linear-gradient(
-        to bottom,
-        rgba(5, 8, 20, 0.96),
-        rgba(5, 8, 20, 0.8),
-        transparent
-      );
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .navbar-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo-wrap {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 0, #ffffff 0, #ffdd8a 32%, #d0892e 70%, #4c2b0b 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 0 35px rgba(255, 211, 106, 0.7);
-    }
-
-    .nav-logo-wrap img {
-      width: 80%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .nav-title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .nav-title {
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 13px;
-    }
-
-    .nav-subtitle {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .nav-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .nav-link {
-      font-size: 13px;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .nav-link:hover {
-      color: var(--text);
-    }
-
-    .btn-primary,
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 8px 18px;
-      border: 1px solid transparent;
-      font-size: 13px;
-      cursor: pointer;
-      transition: var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #ffd36a, #ffb347);
-      color: #16120a;
-      font-weight: 600;
-      box-shadow: 0 12px 30px rgba(255, 179, 71, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 20px 40px rgba(255, 179, 71, 0.6);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border-color: rgba(255, 255, 255, 0.18);
-      color: var(--text-muted);
-    }
-
-    .btn-ghost:hover {
-      border-color: rgba(255, 255, 255, 0.35);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    /* ====== HERO ====== */
-
-    .hero {
-      position: relative;
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 110px 16px 72px;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url("hero-building.jpg"); /* <— ТВОЁ ФОТО ЗДАНИЯ */
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.45);
-      transform: translateY(0);
-      background-attachment: fixed; /* лёгкий параллакс */
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(255, 211, 106, 0.45), transparent 55%),
-        radial-gradient(circle at bottom, rgba(5, 8, 20, 0.96), #050814 80%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .hero-particles::before,
-    .hero-particles::after {
-      content: "";
-      position: absolute;
-      inset: -10%;
-      background-image: radial-gradient(#ffd36a 1px, transparent 0);
-      background-size: 18px 18px;
-      opacity: 0.17;
-      animation: floatParticles 32s linear infinite;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .hero-particles::after {
-      opacity: 0.26;
-      animation-duration: 52s;
-      transform: scale(1.2);
-    }
-
-    @keyframes floatParticles {
-      from {
-        transform: translate3d(0, 0, 0);
-      }
-      to {
-        transform: translate3d(0, -10%, 0);
-      }
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 1080px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 40px;
-      align-items: center;
-    }
-
-    @media (max-width: 880px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(5, 8, 20, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      margin-bottom: 14px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #55ffb2;
-      box-shadow: 0 0 12px #55ffb2;
-    }
-
-    .hero-title {
-      font-size: clamp(32px, 4.4vw, 44px);
-      line-height: 1.1;
-      margin: 0 0 10px;
-      text-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
-    }
-
-    .hero-title span {
-      color: var(--accent);
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 460px;
-      margin-bottom: 22px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .hero-caption {
-      font-size: 12px;
-      color: var(--text-muted);
-      max-width: 360px;
-    }
-
-    .hero-right-card {
-      background: rgba(5, 8, 20, 0.86);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 18px 18px 16px;
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      backdrop-filter: blur(26px);
-    }
-
-    .hero-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hero-logo {
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
-      background: radial-gradient(circle at top, #ffffff 0, #ffdd8a 35%, #d0892e 75%, #4c2b0b 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 0 40px rgba(255, 211, 106, 0.7);
-    }
-
-    .hero-logo img {
-      width: 88%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .hero-church-name {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .hero-church-line {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hero-pastor {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      gap: 12px;
-      align-items: center;
-    }
-
-    .hero-pastor-photo {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .hero-pastor-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero-pastor-name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .hero-pastor-note {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hero-scripture {
-      font-size: 11px;
-      color: var(--text-muted);
-      border-left: 2px solid rgba(255, 211, 106, 0.7);
-      padding-left: 10px;
-    }
-
-    /* ====== SECTIONS ====== */
-
-    section {
-      padding: 64px 16px;
-    }
-
-    .section-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-soft);
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      font-size: 24px;
-      margin: 0 0 10px;
-    }
-
-    .section-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 560px;
-      margin-bottom: 28px;
-    }
-
-    .fade-section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: var(--transition-slow);
-    }
-
-    .fade-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ====== ROLES ====== */
-
-    #roles {
-      background: radial-gradient(circle at top, rgba(255, 211, 106, 0.12), transparent 55%);
-    }
-
-    .roles-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    @media (max-width: 1024px) {
-      .roles-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .roles-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .role-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      border: 1px solid var(--card-border);
-      padding: 14px 14px 16px;
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: var(--transition-fast);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .role-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at top, rgba(255, 211, 106, 0.16), transparent 56%);
-      opacity: 0;
-      transition: var(--transition-fast);
-    }
-
-    .role-card:hover::before {
-      opacity: 1;
-    }
-
-    .role-img {
-      width: 100%;
-      height: 130px;
-      border-radius: 10px;
-      object-fit: cover;
-      margin-bottom: 4px;
-      filter: saturate(1.05);
-    }
-
-    .role-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .role-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      flex: 1;
-    }
-
-    .role-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--accent);
-    }
-
-    /* ====== ABOUT CHURCH & PASTOR ====== */
-
-    #about {
-      background: radial-gradient(circle at bottom, rgba(5, 8, 20, 0.95), #02040a 70%);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-
-    @media (max-width: 880px) {
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .about-photo {
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-    }
-
-    .about-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .about-text {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .about-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .about-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      overflow: hidden;
-      background: radial-gradient(circle at top, #ffffff 0, #ffdd8a 35%, #d0892e 75%, #4c2b0b 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-logo img {
-      width: 90%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .about-pastor-card {
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: radial-gradient(circle at top left, rgba(255, 211, 106, 0.12), rgba(5, 8, 20, 0.96));
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      gap: 12px;
-      align-items: center;
-    }
-
-    .about-pastor-photo {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .about-pastor-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .about-pastor-name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .about-pastor-role {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .about-pastor-quote {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ====== TRAINING SECTION ====== */
-
-    #training {
-      background: #050814;
-    }
-
-    .training-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    @media (max-width: 900px) {
-      .training-list {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .training-item {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      border: 1px solid var(--card-border);
-      padding: 16px;
-      font-size: 13px;
-      color: var(--text-muted);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02);
-    }
-
-    .training-item strong {
-      color: var(--text);
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-
-    /* ====== CONTACT/APPLY SECTION ====== */
-
-    #apply {
-      background: radial-gradient(circle at top, rgba(255, 211, 106, 0.15), #050814 55%);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 80px;
-    }
-
-    .apply-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 26px;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 880px) {
-      .apply-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .mini-form {
-      background: rgba(5, 8, 20, 0.94);
-      border-radius: 18px;
-      padding: 18px 18px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .field {
-      flex: 1;
-      min-width: 140px;
-    }
-
-    label {
-      display: block;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 9px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 8, 20, 0.9);
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
-      transition: var(--transition-fast);
-    }
-
-    textarea {
-      border-radius: 12px;
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: rgba(255, 211, 106, 0.7);
-      box-shadow: 0 0 0 1px rgba(255, 211, 106, 0.35);
-    }
-
-    .form-footer-text {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .btn-contact {
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 13px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 8, 20, 0.9);
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .btn-contact:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    /* ====== FOOTER ====== */
-
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-align: center;
-      background: #050814;
-    }
-
-    .footer-links {
-      margin-top: 4px;
-    }
-
-    .footer-links a {
-      margin: 0 6px;
-    }
-  </style>
+  <title>Ковчег Медиа — Цифровые апостолы</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="navbar-inner">
-      <div class="nav-left">
-        <div class="nav-logo-wrap">
-          <img src="kovcheg-logo.png" alt="Ковчег логотип" />
-        </div>
-        <div class="nav-title-block">
-          <div class="nav-title">Цифровые Апостолы</div>
-          <div class="nav-subtitle">Медиа-служение церкви «Ковчег»</div>
-        </div>
-      </div>
-      <div class="nav-actions">
-        <button class="btn-ghost nav-link" onclick="scrollToSection('roles')">
-          Направления
-        </button>
-        <button class="btn-ghost nav-link" onclick="scrollToSection('about')">
-          О церкви
-        </button>
-        <button class="btn-ghost nav-link" onclick="scrollToSection('training')">
-          Обучение
-        </button>
-        <button class="btn-primary" onclick="scrollToSection('apply')">
-          Хочу служить
-        </button>
-      </div>
+  <!-- ФОН С ЧАСТИЦАМИ -->
+  <div id="particles-js" class="particles-bg"></div>
+
+  <!-- ХЕДЕР -->
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img src="img/image_0.png" alt="Ковчег — логотип" />
+      <span class="logo-caption">Медиа-служение</span>
     </div>
+    <nav class="main-nav">
+      <a href="#hero">Главная</a>
+      <a href="#vision">Видение</a>
+      <a href="#roles">Направления</a>
+      <a href="#join">Заявка</a>
+    </nav>
+    <a href="https://t.me/GVibesMedia" target="_blank" class="header-contact">
+      <i class="fa-brands fa-telegram"></i>
+      <span>Написать координатору</span>
+    </a>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero hero-particles" id="top">
-      <div class="hero-bg"></div>
-      <div class="hero-overlay"></div>
+  <!-- HERO С 3D-ЗДАНИЕМ -->
+  <section id="hero" class="section hero-section">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="hud-label">инициализация медиа-миссии</p>
+        <h1>
+          СЛУЖЕНИЕ<br />
+          В <span class="accent">ЦИФРОВОМ</span> МИРЕ
+        </h1>
+        <p class="hero-subtitle">
+          Здание церкви — наш физический дом. Цифровое пространство — наш
+          второй зал, где проповедь слышат те, кто ещё ни разу не был в
+          собрании. Мы собираем команду <span class="accent">цифровых
+          апостолов</span>, чтобы нести Евангелие туда, где люди проводят
+          большую часть своей жизни — в сети.
+        </p>
+        <div class="hero-actions">
+          <a href="#join" class="btn primary">
+            ВСТУПИТЬ В КОМАНДУ <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#roles" class="btn ghost">
+            Посмотреть направления
+          </a>
+        </div>
+      </div>
 
-      <div class="hero-inner fade-section">
-        <div>
-          <div class="hero-badge">
-            <span class="hero-badge-dot"></span>
-            <span>Медиа-служение церкви «Ковчег»</span>
+      <div class="hero-visual">
+        <div class="building-wrapper" id="building3d">
+          <div class="building-layer back"></div>
+          <div class="building-layer glow"></div>
+          <div class="building-layer front"></div>
+        </div>
+        <div class="hero-tag">
+          <span class="dot pulse"></span>
+          <span>Церковь «Ковчег» · Омск</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ВИДЕНИЕ + ПАСТОР -->
+  <section id="vision" class="section section-vision">
+    <div class="section-title-wrap">
+      <h2>ВИДЕНИЕ МЕДИА-СЛУЖЕНИЯ</h2>
+      <p>Мы не просто закрываем технические задачи — мы строим цифровую кафедру.</p>
+    </div>
+
+    <div class="vision-grid">
+      <div class="pastor-card tilt">
+        <div class="pastor-photo">
+          <img src="img/image_2.png" alt="Пастор Михаил Нигородов" />
+        </div>
+        <div class="pastor-overlay">
+          <h3>Пастор Михаил Нигородов</h3>
+          <p>Старший пастор церкви «Ковчег»</p>
+        </div>
+      </div>
+
+      <div class="vision-text glass-panel">
+        <p class="hud-label">слова пастора</p>
+        <blockquote>
+          «Сегодня кафедра проповедника стоит не только в зале церкви, но и в
+          миллионах экранов. Мы призваны звучать там, где звучит этот мир —
+          чтобы голос Христа не терялся в шуме ленты».
+        </blockquote>
+        <p>
+          Медиа-служение «Ковчег» — это пространство, где духовное и
+          технологичное встречаются. Мы обучаем, настраиваем, помогаем
+          освоить инструменты ИИ, монтаж, работу в прямом эфире и создание
+          сайтов.
+        </p>
+        <p>
+          Даже если ты никогда не монтировал видео — здесь ты сможешь
+          получить реальные навыки, сформировать портфолио и послужить
+          Богу тем, что востребовано в 21 веке.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- РОЛИ / НАПРАВЛЕНИЯ -->
+  <section id="roles" class="section section-roles">
+    <div class="section-title-wrap">
+      <h2>ВЫБЕРИ СВОЙ МОДУЛЬ СЛУЖЕНИЯ</h2>
+      <p>Наведись на нужный блок — увидишь детальную «HUD-карту» задач.</p>
+    </div>
+
+    <div class="roles-grid">
+      <!-- CREATOR -->
+      <article class="role-card tilt">
+        <div class="role-icon">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <h3>КРЕАТОР КОРОТКИХ ВИДЕО</h3>
+        <p>
+          Делаешь из проповеди живые, цепляющие клипы под VK, Telegram и YouTube.
+        </p>
+        <ul>
+          <li>Работа с вертикальным форматом (Reels / Shorts / клипы).</li>
+          <li>Добавление субтитров и оформления под бренд церкви.</li>
+          <li>Помощь нейросетей в выборе лучших моментов.</li>
+        </ul>
+
+        <div class="role-details">
+          <div class="role-details-block">
+            <span class="role-details-title">Что будешь делать</span>
+            <p>Резать длинные проповеди на короткие фрагменты, подбирать «крючок» начала, ставить титры, музыку, выгружать готовые ролики.</p>
           </div>
-
-          <h1 class="hero-title">
-            Стань <span>голосом церкви</span> в цифровом мире
-          </h1>
-          <p class="hero-subtitle">
-            Мы ищем людей, чьё сердце горит служением и кому интересно видео,
-            соцсети и современные технологии. Вместе мы сделаем так, чтобы
-            благую весть было слышно далеко за пределами здания.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="scrollToSection('apply')">
-              Вступить в медиа-команду
-            </button>
-            <button class="btn-ghost" onclick="scrollToSection('roles')">
-              Посмотреть направления
-            </button>
+          <div class="role-details-block">
+            <span class="role-details-title">Что даём мы</span>
+            <p>Программы для авто-нарезки, шаблоны субтитров, обучающие созвоны по монтажу и чек-лист по оформлению роликов.</p>
           </div>
-
-          <p class="hero-caption">
-            Никакого опыта не требуется: мы обучим работе с монтажом, нейросетями,
-            прямыми эфирами и созданием сайтов. Главное — желание служить.
-          </p>
+          <div class="role-details-block">
+            <span class="role-details-title">От тебя нужно</span>
+            <p>Аккуратность, чувство вкуса, желание учиться и 2–4 часа в неделю на служение.</p>
+          </div>
         </div>
 
-        <aside class="hero-right-card">
-          <div class="hero-logo-row">
-            <div class="hero-logo">
-              <img src="kovcheg-logo.png" alt="Л
+        <span class="role-status hot">Статус: набор открыт</span>
+      </article>
+
+      <!-- SMM -->
+      <article class="role-card tilt">
+        <div class="role-icon">
+          <i class="fa-solid fa-hashtag"></i>
+        </div>
+        <h3>SMM-КУРАТОР СОЦСЕТЕЙ</h3>
+        <p>Отвечаешь за голос церкви в соцсетях и общение с людьми онлайн.</p>
+        <ul>
+          <li>VK, Telegram, YouTube, Rutube — по договорённости.</li>
+          <li>Посты, описания к роликам, ответы на комментарии.</li>
+          <li>Использование ИИ для текстов и картинок.</li>
+        </ul>
+
+        <div class="role-details">
+          <div class="role-details-block">
+            <span class="role-details-title">Что будешь делать</span>
+            <p>Планировать публикации, помогать людям в личных сообщениях, писать простые, живые тексты и следить, чтобы странички не «умирали».</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">Что даём мы</span>
+            <p>Готовую стратегию, доступ к нейросетям, шаблоны постов и поддержку по содержанию от служителей.</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">От тебя нужно</span>
+            <p>Грамотный русский, любовь к людям, умение отвечать спокойно и по-христиански даже на сложные комментарии.</p>
+          </div>
+        </div>
+
+        <span class="role-status priority">Статус: высокий приоритет</span>
+      </article>
+
+      <!-- STREAM -->
+      <article class="role-card tilt">
+        <div class="role-icon">
+          <i class="fa-solid fa-tower-broadcast"></i>
+        </div>
+        <h3>ОПЕРАТОР ПРЯМЫХ ЭФИРОВ</h3>
+        <p>Управляешь трансляциями богослужений и создаёшь атмосферу онлайн.</p>
+        <ul>
+          <li>Переключение камер и ракурсов в реальном времени.</li>
+          <li>Контроль звука, заставок, титров и чата.</li>
+          <li>Работа бок о бок с командой прославления и пастором.</li>
+        </ul>
+
+        <div class="role-details">
+          <div class="role-details-block">
+            <span class="role-details-title">Что будешь делать</span>
+            <p>Следить за картинкой и звуком, вовремя менять планы камер, включать нужные слайды и титры во время проповеди и поклонения.</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">Что даём мы</span>
+            <p>Обучение на реальных служениях, готовые схемы эфиров, помощь в настройке пульта, камер и OBS/программ вещания.</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">От тебя нужно</span>
+            <p>Внимательность, ответственность и готовность приходить заранее, чтобы всё настроить до начала служения.</p>
+          </div>
+        </div>
+
+        <span class="role-status">Статус: обучение предусмотрено</span>
+      </article>
+
+      <!-- WEB -->
+      <article class="role-card tilt">
+        <div class="role-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <h3>ВЕБ-АРХИТЕКТОР</h3>
+        <p>Создаёшь лендинги и микросайты для проектов и служений церкви.</p>
+        <ul>
+          <li>Работа в конструкторах (no-code) и простых CMS.</li>
+          <li>Сбор заявок через формы, подключение аналитики.</li>
+          <li>Оформление страниц под единый стиль «Ковчег Медиа».</li>
+        </ul>
+
+        <div class="role-details">
+          <div class="role-details-block">
+            <span class="role-details-title">Что будешь делать</span>
+            <p>Собирать простые сайты под конференции, мероприятия, курсы, оформлять страницы регистрации и благодарности.</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">Что даём мы</span>
+            <p>Доступ к платным инструментам (по возможности), шаблоны блоков, наставничество и помощь по структуре страниц.</p>
+          </div>
+          <div class="role-details-block">
+            <span class="role-details-title">От тебя нужно</span>
+            <p>Логическое мышление, аккуратность, желание разбираться в сервисах и доводить проекты до конца.</p>
+          </div>
+        </div>
+
+        <span class="role-status">Статус: открыто</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ФОРМА ЗАЯВКИ -->
+  <section id="join" class="section section-form">
+    <div class="section-title-wrap">
+      <h2>ПОДКЛЮЧЕНИЕ К КОМАНДЕ</h2>
+      <p>Заполни анкету — координатор свяжется с тобой и расскажет детали.</p>
+    </div>
+
+    <div class="form-shell">
+      <form id="join-form" class="join-form">
+        <div class="field">
+          <input type="text" id="name" required placeholder=" " />
+          <label for="name">Имя / как к тебе обращаться</label>
+        </div>
+
+        <div class="field">
+          <input type="text" id="contact" required placeholder=" " />
+          <label for="contact">Telegram, VK или WhatsApp</label>
+        </div>
+
+        <div class="field">
+          <select id="role" required>
+            <option value="" disabled selected>Выбери направление</option>
+            <option value="Креатор коротких видео">Креатор коротких видео</option>
+            <option value="SMM-куратор соцсетей">SMM-куратор соцсетей</option>
+            <option value="Оператор прямых эфиров">Оператор прямых эфиров</option>
+            <option value="Веб-архитектор">Веб-архитектор</option>
+            <option value="Готов к любому направлению">Готов к любому направлению</option>
+          </select>
+          <label class="select-label">Направление служения</label>
+        </div>
+
+        <button type="submit" class="btn primary wide">
+          ОТПРАВИТЬ ЗАЯВКУ <i class="fa-solid fa-satellite-dish"></i>
+        </button>
+        <div id="form-status" class="form-status"></div>
+      </form>
+
+      <aside class="form-side glass-panel">
+        <p class="hud-label">как это работает</p>
+        <ul class="steps">
+          <li><span>01</span> Заполняешь форму с контактами и направлением.</li>
+          <li><span>02</span> Координатор получает заявку в Telegram.</li>
+          <li><span>03</span> Созвон / встреча, знакомство и старт обучения.</li>
+        </ul>
+        <p class="mini-note">
+          Хочешь написать сразу — выбери удобный вариант:
+        </p>
+        <div class="quick-contacts">
+          <a href="https://vk.com/g.vibes767" target="_blank">
+            <i class="fa-brands fa-vk"></i> Написать в VK
+          </a>
+          <a href="https://t.me/GVibesMedia" target="_blank">
+            <i class="fa-brands fa-telegram"></i> Написать в Telegram
+          </a>
+          <a href="tel:+79236727827">
+            <i class="fa-solid fa-phone"></i> Позвонить: +7 923 672-78-27
+          </a>
+        </div>
+        <p class="mini-note">
+          Данные никуда не передаются третьим лицам. Всё внутри команды церкви «Ковчег».
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-logo">
+        <img src="img/image_0.png" alt="Ковчег" />
+      </div>
+      <div class="footer-text">
+        <p>Церковь христиан веры евангельской «Ковчег» · Медиа-служение.</p>
+        <p class="footer-meta">Digital Ministry · 2025.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://vk.com/g.vibes767" target="_blank" title="VK">
+          <i class="fa-brands fa-vk"></i>
+        </a>
+        <a href="https://t.me/GVibesMedia" target="_blank" title="Telegram">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="tel:+79236727827" title="Позвонить">
+          <i class="fa-solid fa-phone"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
