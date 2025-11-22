@@ -1078,8 +1078,8 @@
   <script>
     // ===== TELEGRAM НАСТРОЙКА =====
     // ВСТАВЬ СВОЙ ТОКЕН И CHAT_ID
-    const TG_BOT_TOKEN = "ТОКЕН_ТВОЕГО_БОТА";
-    const TG_CHAT_ID = "ТВОЙ_CHAT_ID";
+    const TG_BOT_TOKEN = "8552340428:AAHWcLOqBloAM0TkFwXikdbNTj7PE6lWn1I";
+    const TG_CHAT_ID = "5093389044";
 
     const form = document.getElementById("join-form");
     const statusEl = document.getElementById("form-status");
@@ -1093,7 +1093,7 @@
 
       if (!name || !contact || !role) return;
 
-      if (TG_BOT_TOKEN === "ТОКЕН_ТВОЕГО_БОТА" || TG_CHAT_ID === "ТВОЙ_CHAT_ID") {
+      if (TG_BOT_TOKEN === "8552340428:AAHWcLOqBloAM0TkFwXikdbNTj7PE6lWn1I" || TG_CHAT_ID === "5093389044") {
         statusEl.className = "form-status err";
         statusEl.textContent = "Ошибка конфигурации: нужно настроить Telegram-бота.";
         return;
